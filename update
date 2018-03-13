@@ -35,11 +35,17 @@ mv $tmp ./data/disposable.txt
 sources=$(cat ./data/sources.txt)
 new=$(mktemp -t freemailXXX)
 for source in $sources; do
+    echo "pulling from source: $source"
     echo "$(curl --silent $source)" >> $new
 done;
 
-curl --silent https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json | jq -r .[] >> $new
+echo "pulling list of disposable domains"
+tmp=$(mktemp -t freemailXXX)
+curl --silent https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json | jq -r .[] > $tmp
+cat $tmp >> $new
+mv $tmp ./data/disposable.txt
 
+echo "sorting, writing..."
 tmp=$(mktemp -t freemailXXX)
 cat $new \
     | sed '/./,$!d' \
