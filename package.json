@@ -17,7 +17,9 @@
     }
   },
   "scripts": {
-    "test": "tape test/test.js",
+    "test": "npm run lint && npm run unit",
+    "unit": "tape test/test.js",
+    "lint": "standard",
     "prepare": "npm run prepare-disposable && npm run prepare-free && standard --fix",
     "prepare-disposable": "printf 'module.exports = `' > disposable.js; cat data/disposable.txt >> disposable.js; printf '`' >> disposable.js",
     "prepare-free": "printf 'module.exports = `' > free.js; cat data/free.txt >> free.js; printf '`' >> free.js"
@@ -25,6 +27,7 @@
   "author": "Will White <will@mapbox.com>",
   "license": "ISC",
   "devDependencies": {
+    "standard": "^16.0.4",
     "tape": "^5.5.2"
   },
   "repository": {
