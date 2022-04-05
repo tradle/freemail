@@ -4,6 +4,18 @@
   "description": "A database of free and disposable email domains and a handy Node.js module for querying it.",
   "main": "index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./free": {
+      "require": "./free.js"
+    },
+    "./disposable": {
+      "require": "./disposable.js"
+    }
+  },
   "scripts": {
     "test": "tape test/test.js",
     "prepare": "npm run prepare-disposable && npm run prepare-free && standard --fix",
