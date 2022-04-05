@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/willwhite/freemail.svg?branch=master)](https://travis-ci.org/willwhite/freemail)
 
+> Fork of [willwhite/freemail](https://github.com/willwhite/freemail) with an updated database, standard typing and a much faster lookup/startup.
+
 # freemail
 
 A database of free and [disposable](http://en.wikipedia.org/wiki/Disposable_email_address)
@@ -34,11 +36,11 @@ If any domains provide disposable email service, they may be moved to
 ### Install
 
 ```
-npm install --save freemail
+npm install --save @tradle/freemail
 ```
 
 ```javascript
-var freemail = require('freemail');
+var freemail = require('@tradle/freemail');
 freemail.isFree('smith@gmail.com');
 > true
 freemail.isFree('jack@mailinater.com');
