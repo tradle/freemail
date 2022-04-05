@@ -1,6 +1,5 @@
 .travis.yml
-data/blacklist.txt
-data/sources.txt
+data
 test
 update
 *.tgz

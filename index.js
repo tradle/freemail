@@ -1,21 +1,20 @@
-var fs = require('fs');
 var tldjs = require('tldjs');
 
-var disposable = load('/data/disposable.txt');
-var free = extend(load('/data/free.txt'), disposable);
+var disposable = lookup(() => require('./disposable.js'));
+var free = lookup(() => require('./free.js'));
 
 function isFree(email) {
     if (typeof email !== 'string') throw new TypeError('email must be a string');
     var split = email.split('@');
     var domain = getDomain(split[1] || split[0]);
-    return !!(domain && free[domain]);
+    return domain && free(domain);
 }
 
 function isDisposable(email) {
     if (typeof email !== 'string') throw new TypeError('email must be a string');
     var split = email.split('@');
     var domain = getDomain(split[1] || split[0]);
-    return !!(domain && disposable[domain]);
+    return domain && (disposable(domain) || free(domain));
 }
 
 function getDomain(host) {
@@ -27,28 +26,14 @@ function getDomain(host) {
   return tldjs.getDomain(host);
 }
 
-function load(path) {
-  return fs.readFileSync(__dirname + path, 'utf8')
-    .split('\n')
-    .reduce(function(res, cur) {
-      res[cur] = true;
-      return res;
-    }, {});
-}
-
-function extend(a, b) {
-  var res = {};
-  var key;
-
-  for (key in a) {
-    res[key] = a[key];
+function lookup (load) {
+  var set
+  return function (email) {
+    if (set === undefined) {
+      set = new Set(load().split('\n'))
+    }
+    return set.has(email)
   }
-
-  for (key in b) {
-    res[key] = b[key];
-  }
-
-  return res;
 }
 
 module.exports = {

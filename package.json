@@ -5,7 +5,10 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "tape test/test.js"
+    "test": "tape test/test.js",
+    "prepare": "npm run prepare-disposable && npm run prepare-free && standard --fix",
+    "prepare-disposable": "printf 'module.exports = `' > disposable.js; cat data/disposable.txt >> disposable.js; printf '`' >> disposable.js",
+    "prepare-free": "printf 'module.exports = `' > free.js; cat data/free.txt >> free.js; printf '`' >> free.js"
   },
   "author": "Will White <will@mapbox.com>",
   "license": "ISC",
