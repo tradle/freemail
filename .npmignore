@@ -1,0 +1,6 @@
+.travis.yml
+data/blacklist.txt
+data/sources.txt
+test
+update
+*.tgz
